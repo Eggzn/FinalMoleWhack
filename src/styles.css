@@ -10,6 +10,10 @@ html {
   overflow: hidden;
 }
 
+.button-container{
+  text-align: center;
+}
+
 h1 {
   text-align: center;
   font-size: 90px;
