@@ -106,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
     points += 1;
     score.textContent = points;
     return points;
+    //I dont like that I can rack up lots o points by clicking one mole.
   }
 
   /**
