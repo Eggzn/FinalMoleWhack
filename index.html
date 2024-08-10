@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="./src/styles.css">
 </head>
 <body>
+
   <h1>Whack!</h1>
   <div>
     <div>
@@ -18,7 +19,15 @@
     <div>
       <h2><span id="timer">0</span> seconds left.</h2>
     </div>
+
+    <audio id="background-music" src="assets/molesong.mp3" loop></audio> <!--made for to be selectable.-->
+  
+    <div class="cursor">
+      <img src="assets/mallet.png">
+    </div>
+
   </div>
+
   <div class="grid">
     <div id="hole0" class="hole">
       <div id="mole0" class="mole"></div>
@@ -47,10 +56,14 @@
     <div id="hole8" class="hole">
       <div id="mole8" class="mole"></div>
     </div>
+   
   </div>
+
+  
   <div class="button-container">
     <button id="start">Start Game</button> <!-- Start button -->
   </div>
+  
   
   <script src="./src/index.js"></script>
 </body>

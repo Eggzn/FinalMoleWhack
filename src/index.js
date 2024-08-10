@@ -2,15 +2,30 @@ document.addEventListener("DOMContentLoaded", () => {
   const holes = document.querySelectorAll('.hole');
   const moles = document.querySelectorAll('.mole');
   const startButton = document.querySelector('#start');
-
+  const cursor = document.querySelector('.cursor');
   const score = document.querySelector('#score');
   const timerDisplay = document.querySelector('#timer');
+  const backgroundMusic = document.getElementById('background-music');
 
   let time = 0;
   let timer;
   let lastHole;
   let points = 0;
   let difficulty = "hard";
+
+  //COME BACK TO RESTUDY ME
+window.addEventListener('mousemove', e => {
+  cursor.style.top = e.pageY + 'px'
+  cursor.style.left = e.pageX + 'px'
+})
+
+window.addEventListener('mousedown', () => {
+  cursor.classList.add('active')
+})
+
+window.addEventListener('mouseup', () => {
+  cursor.classList.remove('active')
+})
 
   /**
    * Generates a random integer within a range.
@@ -38,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * Chooses a random hole from the list of holes, ensuring no double holes
-   * Let's make sure we don't pick the same hole twice in a row.
    */
   function chooseHole(holes) {
     const index = Math.floor(Math.random() * holes.length);
@@ -54,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * Calls the showUp function if time > 0 and stops the game if time = 0.
-   * Checks if the game should continue or stop. Keeps the game running if there's still time left.
+  
    */
   function gameOver(time) {
     if (time > 0) {
@@ -67,8 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /**
-   * Calls the showAndHide() function with a specific delay and hole.
-   * Time to make a mole pop up! Chooses a hole and sets the delay.
+   * Calls the showAndHide() function with a specific delay and hole.  
    */
   function showUp() {
     const delay = setDelay(difficulty);
@@ -78,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * Shows and hides the mole given a delay time and the hole where the mole is hidden.
-   * This function makes the mole visible, then hides it after a delay.
    */
   function showAndHide(hole, delay) {
     toggleVisibility(hole); // Show the mole
@@ -142,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * Event handler for when a player clicks on a mole.
-   * Increment the score whenever a mole is clicked (whacked).
    */
   function whack(event) {
     updateScore();
@@ -151,7 +162,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * Adds the 'click' event listeners to the moles.
-   * Set up event listeners on all the moles so they can be whacked.
    */
   function setEventListeners() {
     moles.forEach(mole => {
@@ -162,7 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * Sets the duration of the game.
-   * Define how long the game will last.
    */
   function setDuration(duration) {
     time = duration;
@@ -171,7 +180,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * Called when the game is stopped. It clears the timer using clearInterval. Returns "game stopped".
-   * Stop the game and clear the timer.
    */
   function stopGame() {
     clearInterval(timer);
@@ -180,9 +188,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * Starts the game when the `startButton` is clicked.
-   * Let's get this game started! Resets everything and kicks off the mole popping.
    */
   function startGame() {
+    setEventListeners();
     console.log("Game starting...");
     clearScore();
     console.log("Score cleared.");
@@ -192,7 +200,10 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Timer started.");
     showUp();
     console.log("First mole shown.");
+    
+    backgroundMusic.play(); // Play the music
     return "game started";
+  
   }
 
   // Ensure startButton exists before adding event listener
@@ -202,12 +213,12 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Start button not found");
   }
 
-  // Set event listeners for moles
-  setEventListeners();
-});
+
+  
 
 // Please do not modify the code below.
 // Used for testing purposes.
+
 window.randomInteger = randomInteger;
 window.chooseHole = chooseHole;
 window.setDelay = setDelay;
@@ -225,3 +236,9 @@ window.time = time;
 window.setDuration = setDuration;
 window.toggleVisibility = toggleVisibility;
 window.setEventListeners = setEventListeners;
+}
+
+);
+
+
+
