@@ -6,12 +6,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const score = document.querySelector('#score');
   const timerDisplay = document.querySelector('#timer');
   const backgroundMusic = document.getElementById('background-music');
+  const difficultySelect = document.getElementById('difficulty');
 
   let time = 0;
   let timer;
   let lastHole;
   let points = 0;
   let difficulty = "hard";
+  let gameRunning = false; //sets the game as not running
 
   //COME BACK TO RESTUDY ME
 window.addEventListener('mousemove', e => {
@@ -29,23 +31,22 @@ window.addEventListener('mouseup', () => {
 
   /**
    * Generates a random integer within a range.
-   * Just a handy utility function to generate random numbers.
    */
   function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   /**
-   * Sets the delay based on difficulty
    * This decides how fast the moles will appear based on the difficulty level.
    */
   function setDelay(difficulty) {
+    console.log(difficulty);
     if (difficulty === "easy") {
       return 1500;
     } else if (difficulty === "normal") {
       return 1000;
     } else if (difficulty === "hard") {
-      return randomInteger(600, 1200);
+      return randomInteger(600, 480);
     } else {
       throw new Error("Invalid difficulty level");
     }
@@ -76,7 +77,7 @@ window.addEventListener('mouseup', () => {
       return timeoutId;
     } else {
       stopGame();
-      return "game stopped";
+      return "You'll Never Stop all of us...";
     }
   }
 
@@ -102,7 +103,6 @@ window.addEventListener('mouseup', () => {
   }
 
   /**
-   * Adds or removes the 'show' class that is defined in styles.css to a given hole.
    * Toggle the visibility of the mole in the given hole.
    */
   function toggleVisibility(hole) {
@@ -111,19 +111,17 @@ window.addEventListener('mouseup', () => {
   }
 
   /**
-   * Increments the points global variable and updates the scoreboard.
    * Update the score every time a mole is whacked.
    */
   function updateScore() {
     points += 1;
     score.textContent = points;
     return points;
-    //I dont like that I can rack up lots o points by clicking one mole.
+    //I dont like that I can rack up lots o points by clicking one mole. fixed 8/13
   }
 
   /**
    * Clears the score by setting `points = 0` and updates the board.
-   * Reset the score to 0 at the start of each game.
    */
   function clearScore() {
     points = 0;
@@ -132,7 +130,6 @@ window.addEventListener('mouseup', () => {
   }
 
   /**
-   * Updates the control board with the timer if time > 0
    * Keep the timer ticking down.
    */
   function updateTimer() {
@@ -144,7 +141,6 @@ window.addEventListener('mouseup', () => {
   }
 
   /**
-   * Starts the timer using setInterval. For each 1000ms (1 second) the updateTimer function gets called.
    * Start the countdown timer for the game.
    */
   function startTimer() {
@@ -156,7 +152,11 @@ window.addEventListener('mouseup', () => {
    * Event handler for when a player clicks on a mole.
    */
   function whack(event) {
+    console.log("Mole clicked");
     updateScore();
+    const mole = event.target;
+    mole.classList.remove('show');
+    console.log("Mole hidden");
     return points;
   }
 
@@ -183,6 +183,7 @@ window.addEventListener('mouseup', () => {
    */
   function stopGame() {
     clearInterval(timer);
+    gameRunning = false; // Reset the gameRunning flag before returning
     return "game stopped";
   }
 
@@ -190,11 +191,16 @@ window.addEventListener('mouseup', () => {
    * Starts the game when the `startButton` is clicked.
    */
   function startGame() {
-    setEventListeners();
+    if (gameRunning) return; // Prevent multiple game instances
+    gameRunning = true; // 
+
+    difficulty = difficultySelect.value;
+    console.log(difficulty);
+    setDelay(difficulty);
     console.log("Game starting...");
     clearScore();
     console.log("Score cleared.");
-    setDuration(10); // Example duration
+    setDuration(15); // Example duration
     console.log("Duration set.");
     startTimer();
     console.log("Timer started.");
@@ -212,7 +218,7 @@ window.addEventListener('mouseup', () => {
   } else {
     console.error("Start button not found");
   }
-
+  setEventListeners();
 
   
 

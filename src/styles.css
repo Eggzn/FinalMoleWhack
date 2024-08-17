@@ -60,6 +60,22 @@ h2 {
     font-size: 30px;
 }
 
+#difficulty {
+  text-align: center;
+  font-size: 15px;
+}
+
+#option {
+  text-align: center;
+  font-size: 30px;
+}
+
+label {
+  text-align: center;
+  font-size: 20px;
+  flex-wrap: wrap;
+}
+
 #timer{
     color: white;
 }
@@ -100,6 +116,7 @@ h2 {
 .mole {
   /*background:url('./assets/mole.png') bottom center no-repeat;*/
   background:url('https://github.com/Thinkful-Ed/js-dev-final-capstone-starter/blob/main/assets/mole.png?raw=true') bottom center no-repeat;
+  /*background: url('./assets/mole.png') bottom center no-repeat;*/
   background-size: 40%;
   position: absolute;
   top: 100%;
@@ -113,5 +130,6 @@ h2 {
 
 .hole.show .mole {
   top: 0;
+  display: block;
   /*transform: scale(1.1);*/
 }
